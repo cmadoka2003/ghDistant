@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Chemin relatif pour le fichier de suivi
+COMMITINFO="suivi/commitInfo.txt"
+
+# Demande à l'utilisateur
+read -p "Voulez-vous créer le fichier de suivi pour ce commit (y/[n]) ? " yn < /dev/tty
+yn=${yn:-n}
+
+case $yn in
+  [Yy]* )
+    # Crée le dossier suivi s'il n'existe pas
+    mkdir -p suivi
+
+    # Écrit la date et l'heure dans le fichier
+    echo "commit vérifié le $(date '+%Y-%m-%d %H:%M:%S')" >> "$COMMITINFO"
+
+    # Ajoute le fichier au commit
+    git add "$COMMITINFO"
+    ;;
+  [Nn]* )
+    # Ne fait rien
+    ;;
+  * )
+    # Enter ou autre -> ne fait rien
+    ;;
+esac
+
+exit 0
